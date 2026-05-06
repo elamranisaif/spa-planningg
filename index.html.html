@@ -1,0 +1,335 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Arial',sans-serif}
+.wrap{background:#0D0D0D;border-radius:16px;padding:20px;color:#fff;position:relative;min-height:400px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.logo{display:flex;align-items:center;gap:8px}
+.ldot{width:8px;height:8px;border-radius:50%;background:#C8F135;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.logo-txt{font-size:12px;font-weight:500;color:#C8F135;letter-spacing:.12em;text-transform:uppercase}
+.month-lbl{font-size:21px;font-weight:500;color:#fff}
+.month-lbl span{color:#C8F135}
+.badge{font-size:9px;background:#161616;color:#555;padding:3px 8px;border-radius:20px;border:.5px solid #222;letter-spacing:.08em;text-transform:uppercase}
+.notice{background:#0A1800;border:.5px solid #1A3A00;border-radius:8px;padding:7px 12px;font-size:9px;color:#5A8A20;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.ndot{width:6px;height:6px;border-radius:50%;background:#C8F135;flex-shrink:0}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:16px}
+.kpi{background:#161616;border-radius:10px;padding:11px 13px;border:.5px solid #222;position:relative;overflow:visible}
+.kval{font-size:24px;font-weight:500;color:#C8F135;line-height:1}
+.klbl{font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.ksub{font-size:9px;color:#333;margin-top:2px}
+.ktip{display:none;position:absolute;bottom:calc(100% + 6px);left:0;right:0;background:#1C1C1C;border:.5px solid #333;border-radius:8px;padding:9px;font-size:9px;color:#888;line-height:1.6;z-index:30;min-width:210px;white-space:normal}
+.kpi:hover .ktip{display:block}
+.kpi.hl{border-color:#C8F135}
+.section-lbl{font-size:9px;color:#444;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.staff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:16px}
+.scard{background:#111;border-radius:10px;padding:10px 12px;border:.5px solid #1C1C1C}
+.sname{font-size:11px;font-weight:500;color:#ccc;margin-bottom:1px}
+.srole{font-size:8px;color:#444;text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.shours{font-size:8px;color:#3A5A10;margin-bottom:6px}
+.skills{display:flex;flex-wrap:wrap;gap:3px}
+.sk{font-size:8px;padding:2px 6px;border-radius:20px;border:.5px solid #222;color:#444}
+.sk.h{border-color:#0F4030;color:#4ADE80}
+.sk.m{border-color:#1A3060;color:#60A5FA}
+.sk.v{border-color:#3A2060;color:#C084FC}
+.sk.e{border-color:#3A2000;color:#FB923C}
+.sk.c{border-color:#3A3000;color:#FACC15}
+.sk.p{border-color:#1E0A3A;color:#E879F9}
+.sk.a{border-color:#1E2A10;color:#86EFAC}
+.toolbar{display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.flt{background:#161616;border:.5px solid #222;color:#555;font-size:9px;padding:4px 10px;border-radius:20px;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;transition:all .15s}
+.flt.on{background:#C8F135;color:#0D0D0D;border-color:#C8F135;font-weight:500}
+.ebtn{margin-left:auto;background:#141E00;border:.5px solid #3A5A00;color:#C8F135;font-size:9px;padding:4px 12px;border-radius:20px;cursor:pointer;font-weight:500;text-transform:uppercase;letter-spacing:.06em;transition:all .15s}
+.ebtn.on{background:#C8F135;color:#0D0D0D;border-color:#C8F135}
+.twrap{overflow-x:auto;border-radius:10px;border:.5px solid #1C1C1C}
+table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:520px}
+thead tr{background:#0F0F0F}
+th{padding:9px 5px;font-size:9px;font-weight:500;color:#444;text-align:center;border-bottom:.5px solid #1C1C1C;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+th:first-child{text-align:left;padding-left:12px;width:66px}
+th:nth-child(2){width:34px}
+th.th-o{color:#86EFAC}
+td{padding:5px 4px;font-size:9px;text-align:center;border-bottom:.5px solid #111;vertical-align:middle}
+td:first-child{text-align:left;padding-left:12px;color:#444;font-weight:500}
+td:nth-child(2){font-size:9px;font-weight:500;color:#2A2A2A;letter-spacing:.08em}
+tr:hover td{background:#111!important}
+tr.we{background:#0F0F0F}
+tr.we td:nth-child(2){color:#C8F135;opacity:.35}
+.chip{display:inline-block;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:500;white-space:nowrap;transition:all .15s}
+.chip.ed{cursor:pointer;outline:1px dashed #2A2A2A}
+.chip.ed:hover{outline-color:#C8F135;transform:scale(1.05)}
+.chip.mod{outline:1px solid #C8F135}
+.chip.ann{outline:1px solid #FACC15}
+.cm{background:#0B2918;color:#4ADE80}
+.cs{background:#0A1628;color:#60A5FA}
+.cp{background:#1A1200;color:#FACC15}
+.co{background:#161616;color:#2A2A2A}
+.cmd{background:#1E0808;color:#F87171}
+.coum{background:#0A1E10;color:#86EFAC}
+.notif-panel{margin-top:14px;border-top:.5px solid #1C1C1C;padding-top:12px;display:none}
+.notif-panel.show{display:block}
+.nheader{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.ntitle{font-size:9px;color:#444;text-transform:uppercase;letter-spacing:.1em}
+.nbadge{background:#C8F135;color:#0D0D0D;font-size:8px;font-weight:500;padding:1px 6px;border-radius:20px;margin-left:6px}
+.nclear{font-size:8px;color:#222;cursor:pointer;text-transform:uppercase;letter-spacing:.08em}
+.nclear:hover{color:#F87171}
+.nitem{background:#111;border-radius:8px;padding:7px 10px;margin-bottom:5px;border-left:2px solid #C8F135;font-size:9px;color:#555;line-height:1.7;border-radius:0 8px 8px 0}
+.nitem b{color:#C8F135}
+.nitem.ann{border-left-color:#FACC15}
+.nitem.ann b{color:#FACC15}
+.legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:.5px solid #1C1C1C;align-items:center}
+.leg{display:flex;align-items:center;gap:5px;font-size:9px;color:#444}
+.leg-dot{width:7px;height:7px;border-radius:50%}
+.leg-box{width:12px;height:8px;border-radius:2px;border:1px solid}
+.hint{margin-left:auto;font-size:8px;color:#1E1E1E}
+.modal-wrap{display:none;position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);border-radius:16px;z-index:50;align-items:center;justify-content:center;min-height:400px}
+.modal-wrap.open{display:flex}
+.modal{background:#161616;border:.5px solid #2A2A2A;border-radius:12px;padding:20px;width:290px;max-width:90%}
+.modal-title{font-size:12px;font-weight:500;color:#C8F135;margin-bottom:2px}
+.modal-sub{font-size:9px;color:#444;margin-bottom:14px}
+.modal label{font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.08em;display:block;margin-bottom:4px}
+.modal select,.modal textarea{width:100%;background:#0D0D0D;border:.5px solid #2A2A2A;color:#ccc;font-size:10px;padding:7px 9px;border-radius:7px;margin-bottom:10px;outline:none;font-family:Arial,sans-serif}
+.modal select:focus,.modal textarea:focus{border-color:#C8F135}
+.modal textarea{resize:none;height:54px;line-height:1.5}
+.mactions{display:flex;gap:8px}
+.mcancel{flex:1;background:transparent;border:.5px solid #2A2A2A;color:#444;font-size:9px;padding:7px;border-radius:7px;cursor:pointer;text-transform:uppercase}
+.mcancel:hover{border-color:#F87171;color:#F87171}
+.msave{flex:1;background:#C8F135;border:none;color:#0D0D0D;font-size:9px;padding:7px;border-radius:7px;cursor:pointer;font-weight:500;text-transform:uppercase}
+</style>
+
+<div class="wrap" id="app">
+  <div class="topbar">
+    <div class="logo"><div class="ldot"></div><div class="logo-txt">SPA Planning</div></div>
+    <div class="month-lbl">Mai <span>2026</span></div>
+    <div class="badge">Confidentiel</div>
+  </div>
+
+  <div class="notice">
+    <div class="ndot"></div>
+    Ce planning évolue en fonction des besoins de service — toute modification est communiquée à la thérapeute concernée.
+  </div>
+
+  <div class="kpis">
+    <div class="kpi"><div class="ktip">Nombre de jours du lundi au vendredi sur mai 2026, hors week-ends.</div><div class="kval">22</div><div class="klbl">Jours ouvrés</div><div class="ksub">Lun → Ven</div></div>
+    <div class="kpi"><div class="ktip">MIA est en arrêt maladie du 1er au 15 mai — 15 jours calendaires d'absence consécutive.</div><div class="kval">15</div><div class="klbl">Jours maladie</div><div class="ksub">MIA · 1→15 mai</div></div>
+    <div class="kpi hl"><div class="ktip">Nombre de membres du staff présents effectivement chaque jour ouvré, après déduction des repos (OFF) et absences. Ex : 5 planifiées – 1 OFF = 4 présentes. Indicateur clé de la capacité opérationnelle du SPA.</div><div class="kval">3–5</div><div class="klbl">Présentes / jour</div><div class="ksub">Hors absences & OFF</div></div>
+    <div class="kpi"><div class="ktip">Nombre de jours sam + dim couverts par au moins un membre de l'équipe sur le mois de mai.</div><div class="kval">9</div><div class="klbl">Week-ends couverts</div><div class="ksub">Sam + Dim</div></div>
+  </div>
+
+  <div class="section-lbl">Équipe & compétences</div>
+  <div class="staff-grid">
+    <div class="scard"><div class="sname">Oumaima</div><div class="srole">Hôtesse d'accueil</div><div class="shours">44H/sem · Repos jeudi · Fermeture 20H</div><div class="skills"><span class="sk a">Accueil</span><span class="sk a">Réception</span><span class="sk a">Caisse</span></div></div>
+    <div class="scard"><div class="sname">Ibtissam</div><div class="srole">Praticienne SPA</div><div class="skills"><span class="sk h">Hammam</span><span class="sk m">Massage</span><span class="sk v">Soin visage</span><span class="sk e">Épilation</span></div></div>
+    <div class="scard"><div class="sname">Khadija</div><div class="srole">Praticienne SPA</div><div class="skills"><span class="sk h">Hammam</span><span class="sk m">Massage</span></div></div>
+    <div class="scard"><div class="sname">Mia</div><div class="srole">Praticienne Senior</div><div class="skills"><span class="sk h">Hammam</span><span class="sk m">Massage</span><span class="sk v">Soin visage</span><span class="sk e">Épilation</span><span class="sk c">Brushing</span><span class="sk c">Mini soin cheveux</span><span class="sk p">Manucure</span><span class="sk p">Pédicure</span></div></div>
+    <div class="scard"><div class="sname">Nezha</div><div class="srole">Coiffeuse & Praticienne</div><div class="skills"><span class="sk h">Hammam</span><span class="sk c">Soin cheveux</span><span class="sk c">Coiffure</span><span class="sk c">Coloration</span><span class="sk p">Manucure</span><span class="sk p">Pédicure</span></div></div>
+  </div>
+
+  <div class="toolbar">
+    <div class="flt on" onclick="setFilter(this,'all')">Tous</div>
+    <div class="flt" onclick="setFilter(this,'we')">Week-ends</div>
+    <div class="flt" onclick="setFilter(this,'sem')">Semaine</div>
+    <div class="flt" onclick="setFilter(this,'mal')">Maladie</div>
+    <div class="ebtn" id="ebtn" onclick="toggleEdit()">✏ Mode édition</div>
+  </div>
+
+  <div class="twrap">
+    <table>
+      <thead><tr>
+        <th>Date</th><th>Jour</th>
+        <th>Nezha</th><th>Mia</th><th>Ibtissam</th><th>Khadija</th><th class="th-o">Oumaima</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="notif-panel" id="npanel">
+    <div class="nheader">
+      <div><span class="ntitle">Notifications thérapeutes</span><span class="nbadge" id="nbadge">0</span></div>
+      <div class="nclear" onclick="clearNotifs()">Effacer tout</div>
+    </div>
+    <div id="nlist"></div>
+  </div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#4ADE80"></div>10H–18H</div>
+    <div class="leg"><div class="leg-dot" style="background:#60A5FA"></div>12H–20H</div>
+    <div class="leg"><div class="leg-dot" style="background:#FACC15"></div>Partiel</div>
+    <div class="leg"><div class="leg-dot" style="background:#86EFAC"></div>Oumaima</div>
+    <div class="leg"><div class="leg-dot" style="background:#F87171"></div>Maladie</div>
+    <div class="leg"><div class="leg-dot" style="background:#1E1E1E"></div>OFF</div>
+    <div class="leg"><div class="leg-box" style="border-color:#C8F135"></div>Modifié</div>
+    <div class="leg"><div class="leg-box" style="border-color:#FACC15"></div>Annoté</div>
+    <div class="hint">Survolez un KPI pour le détail</div>
+  </div>
+
+  <div class="modal-wrap" id="mwrap">
+    <div class="modal">
+      <div class="modal-title" id="mtitle"></div>
+      <div class="modal-sub" id="msub"></div>
+      <label>Modifier l'horaire</label>
+      <select id="msel">
+        <option>10H-18H</option><option>12H-20H</option><option>14H-20H</option>
+        <option>09H-16H</option><option>09H-20H</option><option>09H-13H</option>
+        <option>10H-14H</option><option>10H-20H</option><option>OFF</option><option>MALADIE</option>
+      </select>
+      <label>Annotation (optionnelle)</label>
+      <textarea id="mnote" placeholder="Ex : remplacement, besoin de service, note RH…"></textarea>
+      <div class="mactions">
+        <div class="mcancel" onclick="closeModal()">Annuler</div>
+        <div class="msave" onclick="saveModal()">Enregistrer & notifier</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const WE=['SAM','DIM'];
+const STAFF=['Nezha','Mia','Ibtissam','Khadija','Oumaima'];
+
+function oum(j){
+  if(j==='JEU') return 'OFF';
+  if(j==='MER'||j==='SAM') return '14H-20H';
+  return '12H-20H';
+}
+
+const raw=[
+  ['01/05','VEN','12H-20H','MALADIE','12H-20H','10H-18H'],
+  ['02/05','SAM','12H-20H','MALADIE','10H-18H','12H-20H'],
+  ['03/05','DIM','10H-18H','MALADIE','OFF',    '12H-20H'],
+  ['04/05','LUN','12H-20H','MALADIE','12H-20H','10H-18H'],
+  ['05/05','MAR','OFF',    'MALADIE','10H-18H','12H-20H'],
+  ['06/05','MER','10H-18H','MALADIE','12H-20H','OFF'    ],
+  ['07/05','JEU','12H-20H','MALADIE','12H-20H','10H-18H'],
+  ['08/05','VEN','12H-20H','MALADIE','10H-18H','12H-20H'],
+  ['09/05','SAM','10H-18H','MALADIE','12H-20H','12H-20H'],
+  ['10/05','DIM','12H-20H','MALADIE','12H-20H','10H-18H'],
+  ['11/05','LUN','12H-20H','MALADIE','OFF',    '12H-20H'],
+  ['12/05','MAR','OFF',    'MALADIE','12H-20H','12H-20H'],
+  ['13/05','MER','12H-20H','MALADIE','12H-20H','OFF'    ],
+  ['14/05','JEU','12H-20H','MALADIE','10H-18H','12H-20H'],
+  ['15/05','VEN','10H-18H','MALADIE','12H-20H','12H-20H'],
+  ['16/05','SAM','12H-20H','12H-20H','12H-20H','10H-18H'],
+  ['17/05','DIM','12H-20H','12H-20H','OFF',    '12H-20H'],
+  ['18/05','LUN','10H-18H','OFF',    '12H-20H','12H-20H'],
+  ['19/05','MAR','OFF',    '12H-20H','12H-20H','10H-18H'],
+  ['20/05','MER','12H-20H','12H-20H','10H-18H','OFF'    ],
+  ['21/05','JEU','12H-20H','10H-18H','12H-20H','12H-20H'],
+  ['22/05','VEN','10H-18H','12H-20H','12H-20H','12H-20H'],
+  ['23/05','SAM','12H-20H','12H-20H','12H-20H','10H-18H'],
+  ['24/05','DIM','12H-20H','OFF',    '10H-18H','12H-20H'],
+  ['25/05','LUN','12H-20H','10H-18H','OFF',    '12H-20H'],
+  ['26/05','MAR','OFF',    '12H-20H','12H-20H','12H-20H'],
+  ['27/05','MER','10H-18H','12H-20H','12H-20H','OFF'    ],
+  ['28/05','JEU','12H-20H','12H-20H','12H-20H','10H-18H'],
+  ['29/05','VEN','12H-20H','12H-20H','10H-18H','12H-20H'],
+  ['30/05','SAM','12H-20H','10H-18H','12H-20H','12H-20H'],
+  ['31/05','DIM','10H-18H','12H-20H','OFF',    '12H-20H'],
+];
+
+let data=raw.map(r=>({
+  date:r[0],jour:r[1],
+  vals:[r[2],r[3],r[4],r[5],oum(r[1])],
+  mods:[false,false,false,false,false],
+  notes:['','','','','']
+}));
+
+let editMode=false, activeFilter='all', currentCell=null;
+const notifs=[];
+
+function chipCls(val,ci){
+  if(val==='OFF') return 'co';
+  if(val==='MALADIE') return 'cmd';
+  if(ci===4) return 'coum';
+  if(val==='10H-18H') return 'cm';
+  if(val==='12H-20H') return 'cs';
+  return 'cp';
+}
+function chipLbl(val){return val==='OFF'?'—':val;}
+
+function render(){
+  const tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  data.forEach((row,ri)=>{
+    const isWe=WE.includes(row.jour);
+    if(activeFilter==='we'&&!isWe) return;
+    if(activeFilter==='sem'&&isWe) return;
+    if(activeFilter==='mal'&&!row.vals.includes('MALADIE')) return;
+    const tr=document.createElement('tr');
+    if(isWe) tr.className='we';
+    let h=`<td>${row.date}</td><td>${row.jour}</td>`;
+    row.vals.forEach((val,ci)=>{
+      const cls=chipCls(val,ci);
+      const extra=row.mods[ci]?(row.notes[ci]?'ann':'mod'):'';
+      const tip=row.notes[ci]?`title="${row.notes[ci]}"`:'' ;
+      const ed=editMode?'ed':'';
+      const oc=editMode?`onclick="openModal(${ri},${ci})"`:'' ;
+      h+=`<td><span class="chip ${cls} ${ed} ${extra}" ${tip} ${oc}>${chipLbl(val)}</span></td>`;
+    });
+    tr.innerHTML=h;
+    tb.appendChild(tr);
+  });
+}
+
+function setFilter(el,type){
+  activeFilter=type;
+  document.querySelectorAll('.flt').forEach(f=>f.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+function toggleEdit(){
+  editMode=!editMode;
+  const b=document.getElementById('ebtn');
+  b.textContent=editMode?'✕ Fermer édition':'✏ Mode édition';
+  b.classList.toggle('on',editMode);
+  render();
+}
+
+function openModal(ri,ci){
+  currentCell={ri,ci};
+  const row=data[ri];
+  document.getElementById('mtitle').textContent=STAFF[ci]+' — '+row.date;
+  document.getElementById('msub').textContent='Horaire actuel : '+row.vals[ci];
+  document.getElementById('msel').value=row.vals[ci];
+  document.getElementById('mnote').value=row.notes[ci]||'';
+  document.getElementById('mwrap').classList.add('open');
+}
+
+function closeModal(){
+  document.getElementById('mwrap').classList.remove('open');
+  currentCell=null;
+}
+
+function saveModal(){
+  if(!currentCell) return;
+  const {ri,ci}=currentCell;
+  const nv=document.getElementById('msel').value;
+  const note=document.getElementById('mnote').value.trim();
+  const ov=data[ri].vals[ci];
+  data[ri].vals[ci]=nv;
+  data[ri].mods[ci]=true;
+  data[ri].notes[ci]=note;
+  const t=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  notifs.unshift({staff:STAFF[ci],date:data[ri].date,ov,nv,note,isAnn:note.length>0,t});
+  renderNotifs();
+  closeModal();
+  render();
+}
+
+function renderNotifs(){
+  const panel=document.getElementById('npanel');
+  const list=document.getElementById('nlist');
+  const badge=document.getElementById('nbadge');
+  badge.textContent=notifs.length;
+  if(!notifs.length){panel.classList.remove('show');return;}
+  panel.classList.add('show');
+  list.innerHTML=notifs.map(n=>{
+    const cls='nitem'+(n.isAnn?' ann':'');
+    const ns=n.note?` — <em style="color:#666">${n.note}</em>`:'';
+    return `<div class="${cls}"><b>${n.staff}</b> · ${n.date} : ${n.ov} → <b>${n.nv}</b>${ns}<span style="float:right;color:#222;font-size:8px">${n.t}</span></div>`;
+  }).join('');
+}
+
+function clearNotifs(){notifs.length=0;renderNotifs();}
+
+render();
+</script>
